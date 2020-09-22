@@ -3,7 +3,16 @@ const SpotifyStrategy = require("passport-spotify").Strategy;
 const keys = require("../credentials");
 const User = require("../models/user-model");
 
-// might need to edi
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  User.findById(id).then((user) => {
+    done(null, user);
+  });
+});
+
 passport.use(
   new SpotifyStrategy(
     {
@@ -16,6 +25,7 @@ passport.use(
       User.findOne({ username: profile.username }).then((currentUser) => {
         if (currentUser) {
           console.log(`User is: ${currentUser}`);
+          done(null, currentUser);
         } else {
           new User({
             username: profile.username,
@@ -25,6 +35,7 @@ passport.use(
             .save()
             .then((newUser) => {
               console.log("new user created: " + newUser);
+              done(null, newUser);
             });
         }
       });

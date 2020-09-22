@@ -4,6 +4,7 @@ const app = express();
 const passportSetup = require("./config/passport-setup");
 const keys = require("./credentials");
 const mongoose = require("mongoose");
+const cookieSession = require("cookie-session");
 
 // set up view engine
 app.set("view engine", "ejs");
