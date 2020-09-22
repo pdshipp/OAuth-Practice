@@ -5,9 +5,20 @@ const passportSetup = require("./config/passport-setup");
 const keys = require("./credentials");
 const mongoose = require("mongoose");
 const cookieSession = require("cookie-session");
+const passport = require("passport");
 
 // set up view engine
 app.set("view engine", "ejs");
+
+app.user(
+  cookieSession({
+    maxAge: 24 * 60 * 60 * 1000,
+    keys: [keys.SESSION.cookieKey],
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 //connect to MongoDB
 mongoose
