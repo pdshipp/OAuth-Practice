@@ -2,6 +2,7 @@ const passport = require("passport");
 const SpotifyStrategy = require("passport-spotify").Strategy;
 const keys = require("../credentials");
 const User = require("../models/user-model");
+const { request } = require("express");
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -24,8 +25,14 @@ passport.use(
       //check if user already exists in database
       User.findOne({ username: profile.username }).then((currentUser) => {
         if (currentUser) {
-          console.log(`User is: ${currentUser}`);
-          done(null, currentUser);
+          currentUser.accesstoken = accessToken;
+          currentUser.refreshtoken = refreshToken;
+          currentUser.save().then((currentUser) => {
+            console.log(
+              `${currentUser} already exists, Access Token refreshed.`
+            );
+            done(null, currentUser);
+          });
         } else {
           new User({
             username: profile.username,
