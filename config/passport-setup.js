@@ -31,6 +31,8 @@ passport.use(
             username: profile.username,
             profileUrl: profile.profileUrl,
             email: profile._json.email,
+            accesstoken: accessToken,
+            refreshtoken: refreshToken,
           })
             .save()
             .then((newUser) => {

@@ -26,7 +26,8 @@ router.get(
   "/spotify/callback",
   passport.authenticate("spotify"),
   (req, res) => {
-    res.send("you reach cb URI");
+    res.redirect("/profile");
+    //    res.send(req.user);
   }
 );
 
