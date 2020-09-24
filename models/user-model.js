@@ -7,6 +7,7 @@ const userSchema = new Schema({
   email: String,
   accesstoken: String,
   refreshtoken: String,
+  thumbnail: String,
 });
 
 const User = mongoose.model("user", userSchema);

@@ -23,6 +23,7 @@ passport.use(
     },
     (accessToken, refreshToken, profile, done) => {
       //check if user already exists in database
+      console.log(profile);
       User.findOne({ username: profile.username }).then((currentUser) => {
         if (currentUser) {
           currentUser.accesstoken = accessToken;
@@ -40,6 +41,7 @@ passport.use(
             email: profile._json.email,
             accesstoken: accessToken,
             refreshtoken: refreshToken,
+            thumbnail: profile.photos[0],
           })
             .save()
             .then((newUser) => {

@@ -55,8 +55,10 @@
     </nav>
     <header>
       <h1>Welcome to your profile, <%= user.username%></h1>
-      <h2>Your access token is <%= user.accesstoken%></h2>
     </header>
-    <main></main>
+    <main>
+      <img src="<%= user.thumbnail %>" />
+      <p>This is your profile thumbnail</p>
+    </main>
   </body>
 </html>
